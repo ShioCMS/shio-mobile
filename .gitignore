@@ -15,3 +15,4 @@ android/.gradle
 android/.project
 android/.settings
 .flutter-plugins
+ios/Flutter/App.framework/flutter_assets/kernel_blob.bin
