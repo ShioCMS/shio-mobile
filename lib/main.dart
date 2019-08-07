@@ -164,55 +164,69 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shiohara CMS',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Shiohara CMS'),
+        title: 'Shiohara CMS',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
         ),
-        body: Center(
-          child: FutureBuilder<List<Site>>(
-            future: sites,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.separated(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    Site site = snapshot.data[index];
-                    return Card(
-                      child: ListTile(
-                        leading: Icon(Icons.pages),
-                        title: Text(site.name),
-                        subtitle: Text(site.description), //
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Folders(
-                                    shFolder: API.getShObjects(site.id), title: site.name)),
+        home: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+              appBar: AppBar(
+                bottom: TabBar(
+                  tabs: [
+                    Tab(icon: Icon(Icons.pages), text: "Sites"),
+                    Tab(icon: Icon(Icons.add_comment), text: "Tasks"),
+                  ],
+                ),
+                title: Text('Shiohara CMS'),
+              ),
+              body: TabBarView(
+                children: [
+                  Center(
+                    child: FutureBuilder<List<Site>>(
+                      future: sites,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.separated(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              Site site = snapshot.data[index];
+                              return Card(
+                                child: ListTile(
+                                  leading: Icon(Icons.pages),
+                                  title: Text(site.name),
+                                  subtitle: Text(site.description), //
+                                  trailing: Icon(Icons.keyboard_arrow_right),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Folders(
+                                              shFolder:
+                                                  API.getShObjects(site.id),
+                                              title: site.name)),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return Divider();
+                            },
                           );
-                        },
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Divider();
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        }
 
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
-          ),
-        ),
-      ),
-    );
+                        // By default, show a loading spinner.
+                        return CircularProgressIndicator();
+                      },
+                    ),
+                  ),
+                  Icon(Icons.add_comment)
+                ],
+              )),
+        ));
   }
 }
 
@@ -249,7 +263,8 @@ class Folders extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Folders(
-                                    shFolder: API.getShObjects(shFolder.id), title: shFolder.name)),
+                                    shFolder: API.getShObjects(shFolder.id),
+                                    title: shFolder.name)),
                           );
                         },
                       ),
@@ -264,9 +279,7 @@ class Folders extends StatelessWidget {
                         subtitle:
                             Text(shPost.summary != null ? shPost.summary : ""),
                         trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () {
-                         
-                        },
+                        onTap: () {},
                       ),
                     );
                   }
