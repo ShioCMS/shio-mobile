@@ -180,6 +180,27 @@ class MyApp extends StatelessWidget {
                 ),
                 title: Text('Shiohara CMS'),
               ),
+              drawer: Drawer(
+                child: ListView(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text("Modeling"),
+                      leading: Icon(Icons.border_color),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                    ),
+                    ListTile(
+                      title: Text("Administration"),
+                      leading: Icon(Icons.all_inclusive),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                    ),
+                    ListTile(
+                      title: Text("Logout"),
+                      leading: Icon(Icons.exit_to_app),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                    ),
+                  ],
+                ),
+              ),
               body: TabBarView(
                 children: [
                   Center(
